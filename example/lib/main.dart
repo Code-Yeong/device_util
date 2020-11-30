@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:device_util/device_util.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String _versionName = 'Unknown';
+  String _versionCode = 'Unknown';
+  List _channelInfo = ['Unknown', 'Unknown'];
 
   @override
   void initState() {
@@ -25,20 +29,25 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
+    String versionName;
+    String versionCode;
+    List channelInfo;
     try {
       platformVersion = await DeviceUtil.platformVersion;
+      versionName = await DeviceUtil.versionName;
+      versionCode = await DeviceUtil.versionCode;
+      channelInfo = await DeviceUtil.getChannelInfo;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
       _platformVersion = platformVersion;
+      _versionName = versionName;
+      _versionCode = versionCode;
+      _channelInfo = channelInfo;
     });
   }
 
@@ -49,8 +58,59 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: ListView(
+          children: [
+            ListTile(
+              title: Text('Running on:'),
+              subtitle: Text('$_platformVersion'),
+            ),
+            ListTile(
+              title: Text('Version name is:'),
+              subtitle: Text('$_versionName'),
+            ),
+            ListTile(
+              title: Text('Version code is:'),
+              subtitle: Text('$_versionCode'),
+            ),
+            ListTile(
+              title: Text('Channels:'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('1. Last channel was: ${_channelInfo[0]}\n'),
+                  Text('2. Current channel is: ${_channelInfo[1]}\n'),
+                ],
+              ),
+            ),
+            ListTile(
+              title: Text('Open application setting page'),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                DeviceUtil.openApplicationSettingPage();
+              },
+            ),
+            ListTile(
+              title: Text('Open network setting page'),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                DeviceUtil.openNetworkSettingPage();
+              },
+            ),
+            ListTile(
+              title: Text('Open app store comment page'),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                DeviceUtil.openAppStoreCommentPage();
+              },
+            ),
+            ListTile(
+              title: Text('Kill app'),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                DeviceUtil.killApp();
+              },
+            ),
+          ],
         ),
       ),
     );
