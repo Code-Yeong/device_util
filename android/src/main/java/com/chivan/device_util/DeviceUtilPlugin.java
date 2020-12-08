@@ -14,9 +14,8 @@ import com.chivan.device_util.utils.AssetsUtils;
 import com.chivan.device_util.utils.PermissionUtils;
 import com.chivan.device_util.utils.PreferenceUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -31,23 +30,15 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  * DeviceUtilPlugin
  */
 public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
+    private final static String CHANNEL_NAME = "device_util";
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
+
     private MethodChannel channel;
-
-    private final static String CHANNEL_NAME = "device_util";
-
     private Activity mActivity;
     private Context mContext;
-
-    @Override
-    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
-        channel.setMethodCallHandler(this);
-        mContext = flutterPluginBinding.getApplicationContext();
-    }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
     // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
@@ -58,11 +49,18 @@ public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, Activ
     // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
     // depending on the user's project. onAttachedToEngine or registerWith must both be defined
     // in the same class.
+
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL_NAME);
         channel.setMethodCallHandler(new DeviceUtilPlugin());
     }
 
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
+        channel.setMethodCallHandler(this);
+        mContext = flutterPluginBinding.getApplicationContext();
+    }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
@@ -91,8 +89,8 @@ public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, Activ
     }
 
 
-    private Map<String,String> getChannelInfo() {
-        Map<String,String> channelInfo = new HashMap<String,String>();
+    private Map<String, String> getChannelInfo() {
+        Map<String, String> channelInfo = new HashMap<>(2);
         String defaultChannelStr = AssetsUtils.readText(mContext, "channel_default.ini");
         String channelStr = AssetsUtils.readText(mContext, "channel.ini");
         if (!channelStr.isEmpty()) {
@@ -101,25 +99,27 @@ public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, Activ
         String latestChannel = "unknown";
         if (!defaultChannelStr.isEmpty()) {
             String[] temp = defaultChannelStr.split("=");
-            if (temp.length == 2) {
+            int expectedLength = 2;
+            if (temp.length == expectedLength) {
                 latestChannel = temp[1];
             }
         }
 
         String key = "FIRST_INSTALL_CHANNEL";
-        String lastChannel = PreferenceUtils.getString(mContext, key, "unknown");
-        if (lastChannel == null || lastChannel.isEmpty() || "unknown".equals(lastChannel)) {
+        String defaultValue = "unknown";
+        String lastChannel = PreferenceUtils.getString(mContext, key, defaultValue);
+        if (lastChannel == null || lastChannel.isEmpty() || defaultValue.equals(lastChannel)) {
             PreferenceUtils.putString(mContext, key, latestChannel);
         }
-        channelInfo.put("first_install_channel",lastChannel);
-        channelInfo.put("current_install_channel",latestChannel);
+        channelInfo.put("first_install_channel", lastChannel);
+        channelInfo.put("current_install_channel", latestChannel);
         return channelInfo;
     }
 
     private PackageInfo getPackageInfo(Context context) {
         try {
-            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_CONFIGURATIONS);
-            return pi;
+            return context.getPackageManager().getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_CONFIGURATIONS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,7 +148,7 @@ public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, Activ
             result.success(getChannelInfo());
         } else if (ConstantValue.OPEN_MARKET_COMMENT.equals(call.method)) {
             AppStoreStar appStoreStar = new AppStoreStar(mContext);
-            Map<String,String> channelInfo = getChannelInfo();
+            Map<String, String> channelInfo = getChannelInfo();
             appStoreStar.toStoreForStar(channelInfo.get("current_install_channel"), null);
         } else if (ConstantValue.SYSTEM_SETTING_PAGE.equals(call.method)) {
             try {
