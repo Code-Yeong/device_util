@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:device_util/device_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:device_util/device_util.dart';
 import 'package:flutter/widgets.dart';
 
 void main() {
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     String versionName;
     String versionCode;
-    List channelInfo;
+    List<String> channelInfo;
     try {
       platformVersion = await DeviceUtil.platformVersion;
       versionName = await DeviceUtil.versionName;
@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
               title: Text('Open app store comment page'),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                DeviceUtil.openAppStoreCommentPage();
+                // DeviceUtil.openAppStoreCommentPage();
               },
             ),
             ListTile(

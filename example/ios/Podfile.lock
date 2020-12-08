@@ -1,0 +1,22 @@
+PODS:
+  - device_util (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - device_util (from `.symlinks/plugins/device_util/ios`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  device_util:
+    :path: ".symlinks/plugins/device_util/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  device_util: 16e968c3441ee00abf64ea04c8a0b694f541d663
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+
+PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
+
+COCOAPODS: 1.9.3

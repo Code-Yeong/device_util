@@ -15,6 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
+  s.resources = ['Assets/*.png', 'Assets/*css','Assets/*html','Assets/*js']
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 

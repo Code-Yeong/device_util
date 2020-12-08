@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <meta name="screen-orientation" content="portrait">
+                <meta name="x5-fullscreen" content="true">
+                    <meta http-equiv="pragma" content="no-cache">
+                        <meta http-equiv="cache-control" content="no-cache,must-revalidate">
+                            <meta name="apple-mobile-web-app-capable" content="yes" />
+                            <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                            <title>腾讯英语君</title>
+                            <script src="flexible.js"></script>
+                            <link href="network_warning.css" rel="stylesheet" type="text/css" />
+                            <style>
+                                html {
+                                    height: 100%;
+                                    /*font-family: "微软雅黑",'Microsoft YaHei',"宋体",SimSun,"黑体",SimHei;*/
+                                }
+                            </style>
+                            
+    </head>
+    
+    <body>
+        <div class="ios9" id="ios9">
+            <div class="item_title">
+                <span>请检测<a href="setting://wifi">&nbsp;设置 <div class="arrow_img_contain"><img class="arrow_img" src="network_warning_arrow.png"></div> 无线局域网&nbsp;</a>是否开启<span>
+                    </div>
+            <div class="item_image image1"><img src="network_warning_03.png"></div>
+            <div class="seperator_line"></div>
+            <div class="item_title">
+                <span>开启后,请检测<a href="setting://mobile_network">&nbsp;设置 <div class="arrow_img_contain"><img class="arrow_img" src="network_warning_arrow.png"></div> 蜂窝移动网络</a><span><br>是否允许腾讯英语君使用蜂窝移动网络
+                    </div>
+            <div class="item_image image2"><img src="network_warning_02.png"></div>
+        </div>
+        
+        <div class="ios10" id="ios10">
+            <div class="item_title">
+                <span>请检测<a href="setting://wifi">&nbsp;WiFi或移动数据&nbsp;</a>是否开启<span>
+                    </div>
+            <div class="item_image image1"><img src="network_warning_03.png"></div>
+            <div class="seperator_line"></div>
+            <div class="item_title">
+                <span>检查是否允许“腾讯英语君”&nbsp;<a href="setting://qqtranslate">使用数据&nbsp;</a><span>
+                        </div>
+            <div class="item_image image3"><img src="network_warning_01.png"></div>
+        </div>
+        <div style="width:100%;height:80px;"></div>
+    </body>
+    
+    <script>
+        //var translator_system_version = "10.2";
+        function update_system_version(){
+            var iosVersion = parseInt(translator_system_version);
+            if(iosVersion >= 10){
+                document.getElementById('ios9').style.display = "none";
+                document.getElementById('ios10').style.display = "block";
+            }else{
+                document.getElementById('ios9').style.display = "block";
+                document.getElementById('ios10').style.display = "none";
+            }
+        }
+        </script>
+    
+</html>

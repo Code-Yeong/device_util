@@ -42,15 +42,15 @@ class DeviceUtil {
   /// On Android, athe channel configuration files are in the directories
   /// "app/src/main/assets/channel.ini" and "app/src/main/assets/default_channel.ini",
   /// and you can see these two files in the "example/android/app/src/main/assets" directory
-  static Future<List> get getChannelInfo async {
-    final List channelInfoList = await _channel.invokeMethod('getChannelInfo');
+  static Future<List<String>> get getChannelInfo async {
+    final List<String> channelInfoList = List<String>.from(await _channel.invokeMethod('getChannelInfo'));
     return channelInfoList;
   }
 
-  /// Open the scoring page of the current application in the app store
-  static void openAppStoreCommentPage() async {
-    await _channel.invokeMethod('openAppStoreComment');
-  }
+  // /// Open the scoring page of the current application in the app store
+  // static void openAppStoreCommentPage(String appID) async {
+  //   await _channel.invokeMethod('openAppStoreComment', {'appId', appID});
+  // }
 
   /// Kill the current application process and exit (Only supports Android)
   static Future<Null> killApp() async {
