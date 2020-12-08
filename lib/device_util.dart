@@ -42,9 +42,9 @@ class DeviceUtil {
   /// On Android, athe channel configuration files are in the directories
   /// "app/src/main/assets/channel.ini" and "app/src/main/assets/default_channel.ini",
   /// and you can see these two files in the "example/android/app/src/main/assets" directory
-  static Future<List<String>> get getChannelInfo async {
-    final List<String> channelInfoList = List<String>.from(await _channel.invokeMethod('getChannelInfo'));
-    return channelInfoList;
+  static Future<Map<String, String>> get getChannelInfo async {
+    final Map<String, String> channelInfo = Map<String, String>.from(await _channel.invokeMethod('getChannelInfo'));
+    return channelInfo;
   }
 
   // /// Open the scoring page of the current application in the app store

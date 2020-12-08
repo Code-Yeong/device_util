@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   String _versionName = 'Unknown';
   String _versionCode = 'Unknown';
-  List _channelInfo = ['Unknown', 'Unknown'];
+  Map<String, String> _channelInfo = {"first_install_channel": "Unknown", "current_install_channel": "Unknown"};
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     String versionName;
     String versionCode;
-    List<String> channelInfo;
+    Map<String, String> channelInfo;
     try {
       platformVersion = await DeviceUtil.platformVersion;
       versionName = await DeviceUtil.versionName;
@@ -77,8 +77,8 @@ class _MyAppState extends State<MyApp> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('1. Last channel was: ${_channelInfo[0]}\n'),
-                  Text('2. Current channel is: ${_channelInfo[1]}\n'),
+                  Text('1. Last channel was: ${_channelInfo.values.first}\n'),
+                  Text('2. Current channel is: ${_channelInfo.values.last}\n'),
                 ],
               ),
             ),

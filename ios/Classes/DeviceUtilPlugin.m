@@ -49,7 +49,10 @@
       [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
       result(nil);
   } else if([@"getChannelInfo" isEqualToString:call.method]){
-      result(@[@"app store",@"app store"]);
+     result(@{
+              @"first_install_channel": @"app store",
+              @"current_install_channel": @"app store"
+             });
   }else  {
     result(FlutterMethodNotImplemented);
   }

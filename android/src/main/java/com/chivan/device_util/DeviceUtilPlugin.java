@@ -91,8 +91,8 @@ public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, Activ
     }
 
 
-    private List<String> getChannelInfo() {
-        List<String> channelList = new ArrayList<>();
+    private Map<String,String> getChannelInfo() {
+        Map<String,String> channelInfo = new HashMap<String,String>();
         String defaultChannelStr = AssetsUtils.readText(mContext, "channel_default.ini");
         String channelStr = AssetsUtils.readText(mContext, "channel.ini");
         if (!channelStr.isEmpty()) {
@@ -111,9 +111,9 @@ public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, Activ
         if (lastChannel == null || lastChannel.isEmpty() || "unknown".equals(lastChannel)) {
             PreferenceUtils.putString(mContext, key, latestChannel);
         }
-        channelList.add(lastChannel);
-        channelList.add(latestChannel);
-        return channelList;
+        channelInfo.put("first_install_channel",lastChannel);
+        channelInfo.put("current_install_channel",latestChannel);
+        return channelInfo;
     }
 
     private PackageInfo getPackageInfo(Context context) {
@@ -145,12 +145,11 @@ public class DeviceUtilPlugin implements FlutterPlugin, MethodCallHandler, Activ
                 result.success(pi.versionName);
             }
         } else if (ConstantValue.GET_CHANNEL_INFO.equals(call.method)) {
-            List<String> channelList = getChannelInfo();
-            result.success(channelList);
+            result.success(getChannelInfo());
         } else if (ConstantValue.OPEN_MARKET_COMMENT.equals(call.method)) {
             AppStoreStar appStoreStar = new AppStoreStar(mContext);
-            List<String> channelList = getChannelInfo();
-            appStoreStar.toStoreForStar(channelList.get(1), null);
+            Map<String,String> channelInfo = getChannelInfo();
+            appStoreStar.toStoreForStar(channelInfo.get("current_install_channel"), null);
         } else if (ConstantValue.SYSTEM_SETTING_PAGE.equals(call.method)) {
             try {
                 PermissionUtils.goToSetting(mActivity);
