@@ -36,10 +36,10 @@ class DeviceUtil {
 
   /// Get channel information of the current application
   ///
-  /// The length of the array is 2, the first value represents the historical version number,
+  /// The length of the Map is 2, the first value represents the historical version number,
   /// and the second value represents the current version number
   ///
-  /// On Android, athe channel configuration files are in the directories
+  /// On Android, the channel configuration files are in the directories
   /// "app/src/main/assets/channel.ini" and "app/src/main/assets/default_channel.ini",
   /// and you can see these two files in the "example/android/app/src/main/assets" directory
   static Future<Map<String, String>> get getChannelInfo async {
