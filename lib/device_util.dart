@@ -43,7 +43,8 @@ class DeviceUtil {
   /// "app/src/main/assets/channel.ini" and "app/src/main/assets/default_channel.ini",
   /// and you can see these two files in the "example/android/app/src/main/assets" directory
   static Future<Map<String, String>> get getChannelInfo async {
-    final Map<String, String> channelInfo = Map<String, String>.from(await _channel.invokeMethod('getChannelInfo'));
+    final Map<String, String> channelInfo =
+        Map<String, String>.from(await _channel.invokeMethod('getChannelInfo'));
     return channelInfo;
   }
 
