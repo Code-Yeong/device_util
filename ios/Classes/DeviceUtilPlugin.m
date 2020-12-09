@@ -50,8 +50,8 @@
       result(nil);
   } else if([@"getChannelInfo" isEqualToString:call.method]){
      result(@{
-              @"first_install_channel": @"app store",
-              @"current_install_channel": @"app store"
+              @"first_install_channel": @"app_store",
+              @"current_install_channel": @"app_store"
              });
   }else  {
     result(FlutterMethodNotImplemented);
