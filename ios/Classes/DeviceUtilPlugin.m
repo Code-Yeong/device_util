@@ -53,6 +53,8 @@
               @"first_install_channel": @"app store",
               @"current_install_channel": @"app store"
              });
+  }else if([@"killApp" isEqualToString:call.method]) {
+      exit(0);
   }else  {
     result(FlutterMethodNotImplemented);
   }

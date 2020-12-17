@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 
@@ -55,8 +54,6 @@ class DeviceUtil {
 
   /// Kill the current application process and exit (Only supports Android)
   static Future<Null> killApp() async {
-    if (Platform.isAndroid) {
-      await _channel.invokeMethod('killApp');
-    }
+    await _channel.invokeMethod('killApp');
   }
 }

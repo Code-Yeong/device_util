@@ -7,3 +7,7 @@
 * Format code.
 
 * Modified app store channel name
+
+## 0.0.3
+
+* Add ios kill app 
