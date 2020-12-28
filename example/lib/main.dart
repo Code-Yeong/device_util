@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
               title: Text('Open app store comment page'),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                // DeviceUtil.openAppStoreCommentPage();
+                DeviceUtil.openAppStoreCommentPage('appId');
               },
             ),
             ListTile(

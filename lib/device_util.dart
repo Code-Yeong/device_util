@@ -47,10 +47,10 @@ class DeviceUtil {
     return channelInfo;
   }
 
-  // /// Open the scoring page of the current application in the app store
-  // static void openAppStoreCommentPage(String appID) async {
-  //   await _channel.invokeMethod('openAppStoreComment', {'appId', appID});
-  // }
+  /// Open the scoring page of the current application in the app store
+  static void openAppStoreCommentPage(String appID) async {
+    await _channel.invokeMethod('openAppStoreComment', {'appId': appID});
+  }
 
   /// Kill the current application process and exit (Only supports Android)
   static Future<Null> killApp() async {
