@@ -18,7 +18,10 @@ class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   String _versionName = 'Unknown';
   String _versionCode = 'Unknown';
-  Map<String, String> _channelInfo = {"first_install_channel": "Unknown", "current_install_channel": "Unknown"};
+  Map<String, String> _channelInfo = {
+    "first_install_channel": "Unknown",
+    "current_install_channel": "Unknown"
+  };
 
   @override
   void initState() {
@@ -100,7 +103,7 @@ class _MyAppState extends State<MyApp> {
               title: Text('Open app store comment page'),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                // DeviceUtil.openAppStoreCommentPage();
+                DeviceUtil.openAppStoreCommentPage('appId');
               },
             ),
             ListTile(

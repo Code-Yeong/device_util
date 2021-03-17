@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 
@@ -43,19 +42,18 @@ class DeviceUtil {
   /// "app/src/main/assets/channel.ini" and "app/src/main/assets/default_channel.ini",
   /// and you can see these two files in the "example/android/app/src/main/assets" directory
   static Future<Map<String, String>> get getChannelInfo async {
-    final Map<String, String> channelInfo = Map<String, String>.from(await _channel.invokeMethod('getChannelInfo'));
+    final Map<String, String> channelInfo =
+        Map<String, String>.from(await _channel.invokeMethod('getChannelInfo'));
     return channelInfo;
   }
 
-  // /// Open the scoring page of the current application in the app store
-  // static void openAppStoreCommentPage(String appID) async {
-  //   await _channel.invokeMethod('openAppStoreComment', {'appId', appID});
-  // }
+  /// Open the scoring page of the current application in the app store
+  static void openAppStoreCommentPage(String appID) async {
+    await _channel.invokeMethod('openAppStoreComment', {'appId': appID});
+  }
 
   /// Kill the current application process and exit (Only supports Android)
   static Future<Null> killApp() async {
-    if (Platform.isAndroid) {
-      await _channel.invokeMethod('killApp');
-    }
+    await _channel.invokeMethod('killApp');
   }
 }
