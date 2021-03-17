@@ -10,4 +10,8 @@
 
 ## 0.0.3
 
-* Add ios kill app 
+* Add ios kill app
+
+## 0.0.4
+
+* Migrate to null-safety  
