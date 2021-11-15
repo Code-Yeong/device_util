@@ -14,4 +14,8 @@
 
 ## 0.0.4
 
-* Migrate to null-safety  
+* Migrate to null-safety
+
+## 1.0.0
+
+* Support Windows

@@ -1,6 +1,6 @@
 name: device_util
 description: A new flutter plugin project.
-version: 0.0.4
+version: 1.0.0
 homepage: https://github.com/Code-Yeong/device_util.git
 
 environment:
@@ -30,6 +30,9 @@ flutter:
         package: com.chivan.device_util
         pluginClass: DeviceUtilPlugin
       ios:
+        pluginClass: DeviceUtilPlugin
+      windows:
+        package: include.device_util
         pluginClass: DeviceUtilPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
