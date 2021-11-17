@@ -5,6 +5,8 @@
 
 // For getPlatformVersion; remove unless needed for your plugin implementation.
 #include <VersionHelpers.h>
+#include <atlstr.h>
+#pragma comment(lib,"version")
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
@@ -68,11 +70,51 @@ void DeviceUtilPlugin::HandleMethodCall(
     }
     result->Success(flutter::EncodableValue(version_stream.str()));
   } else if (method_call.method_name().compare("getVersionName") == 0) {
-    auto version_name = "windows unknown";
-    result->Success(flutter::EncodableValue(version_name));
+    wchar_t szAppFullPath[_MAX_PATH] = {0};
+    GetModuleFileName(NULL, szAppFullPath, MAX_PATH);
+    DWORD dwLen = GetFileVersionInfoSize(szAppFullPath, NULL);
+    char *pszAppVersion = new char[dwLen + 1];
+    std::string versionName = "1.0.0";
+    if(pszAppVersion){
+        memset(pszAppVersion, 0, sizeof(char)*(dwLen + 1));
+        GetFileVersionInfo(szAppFullPath, NULL, dwLen, pszAppVersion);
+        CString strVersion;
+        UINT nLen(0);
+        VS_FIXEDFILEINFO *pFileInfo(NULL);
+        VerQueryValue(pszAppVersion, TEXT("\\"), (LPVOID*)&pFileInfo, &nLen);
+        if(pFileInfo || true){
+            strVersion.Format(TEXT("%d.%d.%d"),
+                HIWORD(pFileInfo->dwFileVersionMS),
+                LOWORD(pFileInfo->dwFileVersionMS),
+                HIWORD(pFileInfo->dwFileVersionLS)
+            );
+            versionName = CT2A(strVersion.GetString());
+        }else{
+            versionName = "1.0.0";
+        }
+    }
+    result->Success(flutter::EncodableValue(versionName));
   } else if (method_call.method_name().compare("getVersionCode") == 0) {
-    auto version_code = "windows unknown";
-    result->Success(flutter::EncodableValue(version_code));
+    wchar_t szAppFullPath[_MAX_PATH] = {0};
+    GetModuleFileName(NULL, szAppFullPath, MAX_PATH);
+    DWORD dwLen = GetFileVersionInfoSize(szAppFullPath, NULL);
+    char *pszAppVersion = new char[dwLen + 1];
+    std::string versionCode = "0";
+    if(pszAppVersion){
+        memset(pszAppVersion, 0, sizeof(char)*(dwLen + 1));
+        GetFileVersionInfo(szAppFullPath, NULL, dwLen, pszAppVersion);
+        CString strVersion;
+        UINT nLen(0);
+        VS_FIXEDFILEINFO *pFileInfo(NULL);
+        VerQueryValue(pszAppVersion, TEXT("\\"), (LPVOID*)&pFileInfo, &nLen);
+        if(pFileInfo || true){
+            strVersion.Format(TEXT("%d"),LOWORD(pFileInfo->dwFileVersionLS));
+            versionCode = CT2A(strVersion.GetString());
+        }else{
+            versionCode = "0";
+        }
+    }
+    result->Success(flutter::EncodableValue(versionCode));
   } else if (method_call.method_name().compare("getChannelInfo") == 0) {
     auto channel_info_map = flutter::EncodableMap{};
     channel_info_map[flutter::EncodableValue("first_install_channel")] = flutter::EncodableValue("Windows");

@@ -19,3 +19,7 @@
 ## 1.0.0
 
 * Support Windows
+
+## 1.0.1
+
+* Obtain the version number of windows desktop application
