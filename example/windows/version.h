@@ -7,7 +7,6 @@
 
 #endif //DEVICE_UTIL_VERSION_H
 
-//
+
 // define the application VERSION code here
-//
-#define FLUTTER_BUILD_NUMBER            1,3,0,12
+//#define FLUTTER_BUILD_NUMBER            10

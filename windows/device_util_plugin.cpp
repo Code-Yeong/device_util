@@ -2,6 +2,7 @@
 
 // This must be included before many other Windows headers.
 #include <windows.h>
+#include <winuser.h>
 
 // For getPlatformVersion; remove unless needed for your plugin implementation.
 #include <VersionHelpers.h>
@@ -124,9 +125,15 @@ void DeviceUtilPlugin::HandleMethodCall(
     result->Success();
   } else if (method_call.method_name().compare("systemSettingPage") == 0) {
     result->Success();
-  } else if (method_call.method_name().compare("killApp") == 0) {
+  } else if (method_call.method_name().compare("minimizeWindow") == 0) {
+    HWND hwnd = GetActiveWindow();
+    ShowWindow(hwnd, SW_SHOWMINIMIZED);
     result->Success();
-  }else if (method_call.method_name().compare("launchNoNetwork") == 0) {
+  } else if (method_call.method_name().compare("killApp") == 0) {
+    HWND hwnd = GetActiveWindow();
+    DestroyWindow(hwnd);
+    result->Success();
+  } else if (method_call.method_name().compare("launchNoNetwork") == 0) {
     result->Success();
   } else {
     result->NotImplemented();

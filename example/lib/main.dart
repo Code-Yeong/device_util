@@ -107,6 +107,13 @@ class _MyAppState extends State<MyApp> {
               },
             ),
             ListTile(
+              title: Text('Minimized window(Windows only)'),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                DeviceUtil.minimizeWindow();
+              },
+            ),
+            ListTile(
               title: Text('Kill app'),
               trailing: Icon(Icons.chevron_right),
               onTap: () {

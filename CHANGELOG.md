@@ -23,3 +23,8 @@
 ## 1.0.1
 
 * Obtain the version number of windows desktop application
+
+## 1.0.2
+
+* Support minimize windows app (Only for windows)
+* Support close windows app

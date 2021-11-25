@@ -52,6 +52,11 @@ class DeviceUtil {
     await _channel.invokeMethod('openAppStoreComment', {'appId': appID});
   }
 
+  /// Minimize window (Window only)
+  static Future<Null> minimizeWindow() async {
+    await _channel.invokeMethod('minimizeWindow');
+  }
+
   /// Kill the current application process and exit (Only supports Android)
   static Future<Null> killApp() async {
     await _channel.invokeMethod('killApp');
