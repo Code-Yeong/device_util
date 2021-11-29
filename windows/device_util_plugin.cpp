@@ -32,6 +32,8 @@ class DeviceUtilPlugin : public flutter::Plugin {
   void HandleMethodCall(
       const flutter::MethodCall<flutter::EncodableValue> &method_call,
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
+
+  // flutter::PluginRegistrarWindows * register_ = nullptr;
 };
 
 // static
@@ -127,11 +129,11 @@ void DeviceUtilPlugin::HandleMethodCall(
     result->Success();
   } else if (method_call.method_name().compare("minimizeWindow") == 0) {
     HWND hwnd = GetActiveWindow();
-    ShowWindow(hwnd, SW_SHOWMINIMIZED);
+    PostMessage(hwnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
     result->Success();
   } else if (method_call.method_name().compare("killApp") == 0) {
     HWND hwnd = GetActiveWindow();
-    DestroyWindow(hwnd);
+    PostMessage(hwnd, WM_SYSCOMMAND, SC_CLOSE, 0);
     result->Success();
   } else if (method_call.method_name().compare("launchNoNetwork") == 0) {
     result->Success();
