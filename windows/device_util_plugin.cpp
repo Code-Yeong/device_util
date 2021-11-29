@@ -85,7 +85,7 @@ void DeviceUtilPlugin::HandleMethodCall(
         UINT nLen(0);
         VS_FIXEDFILEINFO *pFileInfo(NULL);
         VerQueryValue(pszAppVersion, TEXT("\\"), (LPVOID*)&pFileInfo, &nLen);
-        if(pFileInfo || true){
+        if(pFileInfo){
             strVersion.Format(TEXT("%d.%d.%d"),
                 HIWORD(pFileInfo->dwFileVersionMS),
                 LOWORD(pFileInfo->dwFileVersionMS),
@@ -110,7 +110,7 @@ void DeviceUtilPlugin::HandleMethodCall(
         UINT nLen(0);
         VS_FIXEDFILEINFO *pFileInfo(NULL);
         VerQueryValue(pszAppVersion, TEXT("\\"), (LPVOID*)&pFileInfo, &nLen);
-        if(pFileInfo || true){
+        if(pFileInfo){
             strVersion.Format(TEXT("%d"),LOWORD(pFileInfo->dwFileVersionLS));
             versionCode = CT2A(strVersion.GetString());
         }else{

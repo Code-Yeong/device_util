@@ -28,3 +28,8 @@
 
 * Support minimize windows app (Only for windows)
 * Support close windows app
+
+
+## 1.0.3
+
+* Fix bugs
