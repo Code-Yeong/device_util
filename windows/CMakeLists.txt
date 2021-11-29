@@ -6,7 +6,7 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 # not be changed
 set(PLUGIN_NAME "device_util_plugin")
 
-add_library(${PLUGIN_NAME} SHARED
+add_library(${PLUGIN_NAME} STATIC
   "device_util_plugin.cpp"
 )
 apply_standard_settings(${PLUGIN_NAME})

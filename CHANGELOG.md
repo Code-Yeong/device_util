@@ -33,3 +33,7 @@
 ## 1.0.3
 
 * Fix bugs
+
+## 1.0.4
+
+* Forbiden dll library for windows-desktop
