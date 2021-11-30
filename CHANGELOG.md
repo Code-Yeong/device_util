@@ -41,3 +41,8 @@
 ## 1.0.5
 
 * revert Forbiden dll library for windows-desktop
+
+
+## 1.0.6
+
+* Forbiden dll library for windows-desktop
