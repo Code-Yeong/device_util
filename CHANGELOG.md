@@ -46,3 +46,7 @@
 ## 1.0.6
 
 * Forbiden dll library for windows-desktop
+
+## 1.0.7
+
+* Fix bugs

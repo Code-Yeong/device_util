@@ -33,25 +33,25 @@ class DeviceUtilPlugin : public flutter::Plugin {
       const flutter::MethodCall<flutter::EncodableValue> &method_call,
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
 
-  // flutter::PluginRegistrarWindows * register_ = nullptr;
+  flutter::PluginRegistrarWindows * register_ = nullptr;
 };
 
 // static
 void DeviceUtilPlugin::RegisterWithRegistrar(
-    flutter::PluginRegistrarWindows *registrar) {
+    flutter::PluginRegistrarWindows *registrars) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-          registrar->messenger(), "device_util",
+          registrars->messenger(), "device_util",
           &flutter::StandardMethodCodec::GetInstance());
 
   auto plugin = std::make_unique<DeviceUtilPlugin>();
-
+  plugin->register_ = registrars;
   channel->SetMethodCallHandler(
       [plugin_pointer = plugin.get()](const auto &call, auto result) {
         plugin_pointer->HandleMethodCall(call, std::move(result));
       });
 
-  registrar->AddPlugin(std::move(plugin));
+  registrars->AddPlugin(std::move(plugin));
 }
 
 DeviceUtilPlugin::DeviceUtilPlugin() {}
@@ -128,11 +128,13 @@ void DeviceUtilPlugin::HandleMethodCall(
   } else if (method_call.method_name().compare("systemSettingPage") == 0) {
     result->Success();
   } else if (method_call.method_name().compare("minimizeWindow") == 0) {
-    HWND hwnd = GetActiveWindow();
+    // HWND hwnd = GetActiveWindow();
+    HWND hwnd = GetParent(register_->GetView()->GetNativeWindow());
     PostMessage(hwnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
     result->Success();
   } else if (method_call.method_name().compare("killApp") == 0) {
-    HWND hwnd = GetActiveWindow();
+    // HWND hwnd = GetActiveWindow();
+    HWND hwnd = GetParent(register_->GetView()->GetNativeWindow());
     PostMessage(hwnd, WM_SYSCOMMAND, SC_CLOSE, 0);
     result->Success();
   } else if (method_call.method_name().compare("launchNoNetwork") == 0) {
